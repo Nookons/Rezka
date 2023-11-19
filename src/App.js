@@ -9,6 +9,7 @@ const App = () => {
         <BrowserRouter>
             <Navbar />
             <AppRouter />
+            test
             <Footer />
         </BrowserRouter>
     );
