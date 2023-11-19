@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=Mooli&display=swap');
+
+/*font-family: 'Gabarito', cursive;
+font-family: 'Mooli', sans-serif;*/
+
+* {
+  box-sizing: border-box;
+}
+
+root {
+  --bg-color: #FFF6E0;
+  --text-color: #272829;
+  --fonts-main: 'Gabarito', cursive;
+}
+
+h1,h2,h3,h4,h5,h6,span,p,article {
+  margin: 0;
+  padding: 0;
+  font-family: 'Gabarito', cursive;
+}
+
+
+a {
+  color: #1f5dff;
+  font-weight: 600;
+}
+
+
+
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+  color: #272829;
+  font-family: 'Gabarito', cursive;
+}
+
+::selection {
+  background-color: #FFF6E0;
+  color: #272829;
+}
+
+@media (prefers-color-scheme: dark) {
+  root {
+    --bg-color: white;
+    --text-color: black;
+  }
+}
+

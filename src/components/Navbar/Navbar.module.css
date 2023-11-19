@@ -1,0 +1,140 @@
+.Main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid black;
+}
+
+.NavBar > a{
+    color: black;
+    text-decoration: none;
+    margin-left: 14px;
+    white-space: nowrap;
+    padding: 4px;
+}
+
+.NavBarBurger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: .3s all ease;
+}
+.NavBarBurger > a{
+    color: white;
+    background-color: black;
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 14px;
+    margin-top: 4px;
+}
+
+.Burger {
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.Burger > a{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 35px;
+    background-color: black;
+    height: 5px;
+    border-radius: 4px;
+}
+
+.Burger > a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -200%;
+    background-color: black;
+    border-radius: 4px;
+}
+.Burger > a:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 200%;
+    background-color: black;
+    border-radius: 4px;
+}
+
+.BurgerActive {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.BurgerActive > a {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 35px;
+    height: 5px;
+    background-color: transparent;
+}
+
+.BurgerActive > a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    background-color: black;
+    border-radius: 4px;
+    transform: rotate(45deg);
+}
+.BurgerActive > a:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    background-color: black;
+    border-radius: 4px;
+    transform: rotate(-45deg);
+}
+
+.LogoPlace {
+    max-width: 50px;
+}
+
+.LogoPlace > img{
+    max-width: 100%;
+    animation: infinite LogoAnimation ;
+    animation-duration: 15s;
+}
+
+@media screen and (max-width: 750px) {
+    .NavBar {
+        display: none;
+    }
+
+    .Burger > a{
+        display: block;
+    }
+}
+
+@keyframes LogoAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
