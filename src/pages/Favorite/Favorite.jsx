@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import styles from "./Favorite.module.css";
 import stylesMovie from "../Home/Home.module.css";
@@ -35,8 +35,28 @@ const Favorite = () => {
         setIsOpen(true)
     }
 
+    useEffect(() => {
+        async function getLocal() {
+            let retrievedString = localStorage.getItem('Favorite');
+            let splitArray = retrievedString.split(',');
 
-    console.log(favorite)
+            console.log(splitArray)
+            // Use Promise.all to concurrently make API requests for each movie ID
+
+            if (splitArray.length > 1) {
+                const responses = await Promise.all(
+                    splitArray.map(async (id) => {
+                        const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=411d08d89a4569fb1b50aec07ee6fb72`);
+                        dispatch({type: "ADD_FAVORITE", payload: response.data})
+                    })
+                );
+            }
+        }
+
+        getLocal();
+    }, []);
+
+
     return (
         <div className={styles.Main}>
             <MyModal visible={isOpen} setVisible={setIsOpen}>
@@ -56,36 +76,36 @@ const Favorite = () => {
                                 emptyIcon={<AcUnitIcon fontSize="inherit"/>}
                                 max={10}
                             />
-                            <p className={stylesMovie.FilmDescription}>Original name: {film.original_title} </p>
-                            <p className={stylesMovie.FilmDescription}>Language: {film.original_language}</p>
-                            <p className={stylesMovie.FilmDescription}>Realese date: {film.release_date}</p>
+                            <p className={stylesMovie.FilmDescription}>Original name: <span>{film.original_title}</span></p>
+                            <p className={stylesMovie.FilmDescription}>Language: <span>{film.original_language}</span></p>
+                            <p className={stylesMovie.FilmDescription}>Realese date: <span>{film.release_date}</span></p>
                             <p className={stylesMovie.FilmDescription}>Category: {film.genres.map(e => {
                                 return (
-                                    <p>{e.name}</p>
+                                    <span>{e.name}</span>
                                 )
                             })}</p>
                             <p className={stylesMovie.Rating}>Rating: <span>{film.vote_average}</span> |
                                 Votes: {film.vote_count}</p>
-                            <p>Popualrity: {film.popularity}</p>
+                            <p className={stylesMovie.FilmDescription}>Popualrity: <span>{film.popularity}</span></p>
                             <p className={stylesMovie.FilmDescription}>Country: {film.production_countries.map(e => {
                                 return (
-                                    <p style={{
+                                    <span style={{
                                         backgroundColor: '#e0e0e0',
                                         padding: '6px',
                                         borderRadius: 4
-                                    }}>{e.name}</p>
+                                    }}>{e.name}</span>
                                 )
                             })}</p>
                             <p className={stylesMovie.FilmDescription}>Company: {film.production_companies.map(e => {
                                 return (
-                                    <p style={{
+                                    <span style={{
                                         backgroundColor: '#e0e0e0',
                                         padding: '6px',
                                         borderRadius: 4
-                                    }}>{e.name}</p>
+                                    }}>{e.name}</span>
                                 )
                             })}</p>
-                            <p>Description: {film.overview}</p>
+                            <p className={stylesMovie.FilmDescription} >Description: <span>{film.overview}</span></p>
                         </div>
                     </div>
                     :
@@ -111,7 +131,7 @@ const Favorite = () => {
             {uniqArray.length
                 ?
                 <div>
-                    <h1>This is you're favorite movies  🫰 </h1>
+                    <h1>This is you're favorite movies 🫰 </h1>
                     <hr/>
                     <br/>
                     <div className={styles.Wrapper}>
@@ -126,9 +146,9 @@ const Favorite = () => {
                 </div>
                 :
                 <div>
-                    <h1>You don't have nothing here...  😢</h1>
+                    <h1>You don't have nothing here... 😢</h1>
                     <hr/>
-                    <h4>Add movies to your favorites to watch them here....   😄</h4>
+                    <h4>Add movies to your favorites to watch them here.... 😄</h4>
                 </div>
             }
         </div>
