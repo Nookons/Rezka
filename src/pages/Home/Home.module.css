@@ -1,9 +1,9 @@
 .Main {
-    padding: 2vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 24px;
 }
 
 hr {
@@ -16,6 +16,7 @@ hr {
     flex-wrap: wrap;
     justify-content: center;
     gap: 34px;
+    max-width: 100%;
 }
 
 .Item {
