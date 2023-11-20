@@ -116,8 +116,6 @@
 
 .LogoPlace > img{
     max-width: 100%;
-    animation: infinite LogoAnimation ;
-    animation-duration: 15s;
 }
 
 @media screen and (max-width: 750px) {

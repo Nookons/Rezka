@@ -1,2 +1,2 @@
 export const HOME_ROUTE = '/'
-export const STORE_ROUTE = '/store'
+export const FAVORITE_ROUTE = '/favorite'

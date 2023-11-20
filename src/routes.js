@@ -1,6 +1,6 @@
-import {HOME_ROUTE, STORE_ROUTE} from "./utils/consts";
+import {HOME_ROUTE, FAVORITE_ROUTE} from "./utils/consts";
 import Home from "./pages/Home/Home";
-import Store from "./pages/Store/Store"
+import Store from "./pages/Favorite/Favorite"
 
 // routes for users
 export const publicRoutes = [
@@ -10,7 +10,7 @@ export const publicRoutes = [
         label: 'Home',
     },
     {
-        path: STORE_ROUTE,
+        path: FAVORITE_ROUTE,
         Component: Store,
         label: 'Home',
     },

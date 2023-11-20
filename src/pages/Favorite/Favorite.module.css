@@ -1,0 +1,36 @@
+.Main {
+    min-height: calc(100dvh - 186px);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+}
+.Wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.item {
+    max-width: 275px;
+    overflow: hidden;
+    border-radius: 24px;
+    transition: .3s all ease-in-out;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.item:hover {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.item:hover > img {
+    cursor: pointer;
+    transform: scale(1.25);
+    opacity: 0.5;
+}
+
+.item > img {
+    max-width: 100%;
+    border-radius: 24px;
+    transition: .3s all ease-in-out;
+}

@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import styles from './Navbar.module.css'
 import {Link} from "react-router-dom";
-import logo from '../../assets/react-logo.svg'
+import logo from '../../assets/logo.svg'
 
 const Navbar = () => {
     const [burger, setBurger] = useState(false);
@@ -20,8 +20,9 @@ const Navbar = () => {
             </div>
             <div className={burger ? styles.NavBarBurger : styles.NavBar}>
                 <Link to="/">Home</Link>
-                <Link to="/store">Store</Link>
+                <Link to="/favorite">Favorite</Link>
             </div>
+
         </div>
     )
 };
