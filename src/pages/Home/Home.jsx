@@ -8,11 +8,13 @@ import AcUnitIcon from '@mui/icons-material/AcUnit';
 import MyModal from "./MyModal";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMovies} from "../../stores/async/fetchMovies";
+import AddReactionIcon from '@mui/icons-material/AddReaction';
 
 
 const Home = () => {
     const dispatch = useDispatch();
     const movies = useSelector(state => state.movies.movies)
+    const favorite = useSelector(state => state.favorite.favoriteItems)
     const [page, setPage] = useState(1);
     const [data, setData] = useState([]);
     const [film, setFilm] = useState();
@@ -82,9 +84,17 @@ const Home = () => {
         setIsModal(false)
         setIsTrailer(true)
     }
+    function setLocal() {
+        const array = []
+        favorite.map(e => {array.push(e.id)})
+
+        localStorage.setItem('Favorite', array);
+    }
+    setLocal()
 
     function addToFavorite(film) {
         console.log(film)
+        setIsModal(false)
         dispatch({type: "ADD_FAVORITE", payload: film})
     }
 
@@ -107,36 +117,36 @@ const Home = () => {
                                 emptyIcon={<AcUnitIcon fontSize="inherit"/>}
                                 max={10}
                             />
-                            <p className={styles.FilmDescription}>Original name: {film.original_title} </p>
-                            <p className={styles.FilmDescription}>Language: {film.original_language}</p>
-                            <p className={styles.FilmDescription}>Realese date: {film.release_date}</p>
+                            <p className={styles.FilmDescription}>Original name: <span>{film.original_title}</span> </p>
+                            <p className={styles.FilmDescription}>Language: <span>{film.original_language}</span></p>
+                            <p className={styles.FilmDescription}>Realese date: <span>{film.release_date}</span></p>
                             <p className={styles.FilmDescription}>Category: {film.genres.map(e => {
                                 return (
-                                    <p>{e.name}</p>
+                                    <span>{e.name}</span>
                                 )
                             })}</p>
                             <p className={styles.Rating}>Rating: <span>{film.vote_average}</span> |
-                                Votes: {film.vote_count}</p>
-                            <p>Popualrity: {film.popularity}</p>
+                                Votes: {film.vote_count} <AddReactionIcon /></p>
+                            <p className={styles.FilmDescription}>Popualrity: <span>{film.popularity}</span></p>
                             <p className={styles.FilmDescription}>Country: {film.production_countries.map(e => {
                                 return (
-                                    <p style={{
+                                    <span style={{
                                         backgroundColor: '#e0e0e0',
                                         padding: '6px',
                                         borderRadius: 4
-                                    }}>{e.name}</p>
+                                    }}>{e.name}</span>
                                 )
                             })}</p>
                             <p className={styles.FilmDescription}>Company: {film.production_companies.map(e => {
                                 return (
-                                    <p style={{
+                                    <span style={{
                                         backgroundColor: '#e0e0e0',
                                         padding: '6px',
                                         borderRadius: 4
-                                    }}>{e.name}</p>
+                                    }}>{e.name}</span>
                                 )
                             })}</p>
-                            <p>Description: {film.overview}</p>
+                            <p className={styles.FilmDescription} >Description: <span>{film.overview}</span></p>
                             <Button onClick={() => addToFavorite(film)} variant="contained">Add to favorite</Button>
                             <Button onClick={watchTrailer} variant="contained">Watch Trailer</Button>
                         </div>
@@ -171,8 +181,8 @@ const Home = () => {
                                 case "Official Trailer":
                                     return (
                                         <iframe
-                                            width="1195vw"
-                                            height="600dvh"
+                                            width="800dvw"
+                                            height="400dvh"
                                             src={`https://www.youtube.com/embed/${element.key}?si=Jx63sB7D1L0Zs6WM`}
                                             title="YouTube video player"
                                             frameBorder="0"
@@ -195,11 +205,11 @@ const Home = () => {
                         return (
                             <div onClick={() => getFilm(element.id)} className={styles.Item}>
                                 <div className={styles.ItemIndex}>
-                                    <h2>{index + 1}</h2>
+                                    <h4>{index + 1}</h4>
                                 </div>
                                 <img src={"https://image.tmdb.org/t/p/w500" + element.poster_path} alt=""/>
                                 <h4>{element.title}</h4>
-                                <h4>Relise: <span>{element.release_date}</span></h4>
+                                {/*<h4>Relise: <span>{element.release_date}</span></h4>*/}
                                 <StyledRating
                                     name="customized-color"
                                     defaultValue={element.vote_average}

@@ -24,14 +24,14 @@
     transition: .3s all ease;
 }
 .NavBarBurger > a{
-    color: white;
-    background-color: black;
+    color: black;
+    border: 1px solid black;
     display: block;
     width: 100%;
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
-    padding: 14px;
+    padding: 6px;
     margin-top: 4px;
 }
 
@@ -47,9 +47,9 @@
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-    width: 35px;
+    width: 25px;
     background-color: black;
-    height: 5px;
+    height: 2.5px;
     border-radius: 4px;
 }
 
@@ -84,8 +84,8 @@
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-    width: 35px;
-    height: 5px;
+    width: 25px;
+    height: 2.5px;
     background-color: transparent;
 }
 
