@@ -5,6 +5,7 @@ font-family: 'Mooli', sans-serif;*/
 
 * {
   box-sizing: border-box;
+  transition: .3s all ease;
 }
 
 root {
@@ -19,6 +20,13 @@ h1,h2,h3,h4,h5,h6,span,p,article {
   font-family: 'Gabarito', cursive;
 }
 
+textarea {
+  max-width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px;
+  margin-top: 14px;
+}
 
 a {
   color: #1f5dff;
@@ -46,4 +54,6 @@ body {
     --text-color: black;
   }
 }
+
+
 

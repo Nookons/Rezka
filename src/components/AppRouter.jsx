@@ -9,6 +9,9 @@ const AppRouter = () => {
             {publicRoutes.map( ({path, Component}, index) =>
                 <Route key={index} path={path} Component={Component} exact={true}/>
             )}
+            {privateRoutes.map( ({path, Component}, index) =>
+                <Route key={index} path={path} Component={Component} exact={true}/>
+            )}
         </Routes>
     )
 };

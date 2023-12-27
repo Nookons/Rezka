@@ -1,0 +1,70 @@
+
+.Main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px;
+}
+
+.FilmContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.Modal {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 24px;
+}
+
+.Frame {
+    width: clamp(110px, 95vw, 1200px);
+    height: clamp(110px, 65vh, 1200px);
+}
+
+.Wrapper {
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 14px;
+}
+.Wrapper > div > img{
+    max-width: 350px;
+}
+.Wrapper > div {
+   display: flex;
+    flex-direction: column;
+}
+.Wrapper > div > button{
+    margin-top: 14px;
+    background-color: #e0e0e0;
+    color: #262626;
+    font-weight: 600;
+    font-size: 16px;
+}
+.Wrapper > div > button:hover{
+    background-color: #333333;
+    color: #d5d5d5;
+}
+
+.MainDescription {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+}
+.MainDescription > span{
+    font-weight: 600;
+}
+
+@media screen and (max-width: 770px) {
+    .Wrapper {
+        justify-content: center;
+    }
+
+    .Frame {
+        width: clamp(110px, 95vw, 1200px);
+        height: clamp(110px, 25vh, 1200px);
+    }
+}
