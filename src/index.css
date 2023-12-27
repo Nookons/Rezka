@@ -44,7 +44,7 @@ body {
 }
 
 ::selection {
-  background-color: #FFF6E0;
+  background-color: rgba(52, 255, 0, 0.29);
   color: #272829;
 }
 

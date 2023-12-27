@@ -18,6 +18,8 @@ const FilmPage = () => {
 
     const [modal, setModal] = useState(false);
 
+    console.log(film);
+
 
     useEffect(() => {
         async function get() {

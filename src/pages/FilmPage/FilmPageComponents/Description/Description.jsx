@@ -38,8 +38,14 @@ const Description = ({film}) => {
                             max={10}
                         />
                         <p className={styles.FilmDescription}>Original name: <span>{film.original_title}</span> </p>
-                        <p className={styles.FilmDescription}>Language: <span>{film.original_language}</span></p>
+                        <p className={styles.FilmDescription}>Original Language: <span>{film.original_language}</span></p>
+                        <p className={styles.FilmDescription}>Available language: {film.spoken_languages.map(e => {
+                            return (
+                                <span>{e.english_name}</span>
+                            )
+                        })}</p>
                         <p className={styles.FilmDescription}>Realese date: <span>{film.release_date}</span></p>
+                        <p className={styles.FilmDescription}>Runtime: <span>{film.runtime} minutes</span></p>
                         <p className={styles.FilmDescription}>Category: {film.genres.map(e => {
                             return (
                                 <span>{e.name}</span>
