@@ -20,10 +20,11 @@ h1,h2,h3,h4,h5,h6,span,p,article {
   font-family: 'Gabarito', cursive;
 }
 
-textarea {
+textarea, input {
   max-width: 100%;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  font-family: 'Gabarito', cursive !important;
   padding: 8px;
   margin-top: 14px;
 }
