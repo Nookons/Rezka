@@ -1,42 +1,65 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios from "axios";
-import {styled} from "@mui/material/styles";
-import {Box, Button, Modal, Rating, TextareaAutosize, Typography} from "@mui/material";
+import {Box, Button, Modal, Rating, TextareaAutosize, TextField, Typography} from "@mui/material";
 import styles from './Film.module.css'
 
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
 import Description from "./FilmPageComponents/Description/Description";
+import {useDispatch} from "react-redux";
+import {fetchComments} from "../../stores/async/fetchComments";
+import {ref, set} from "firebase/database";
+import {database} from "../../firebase";
+import { useSelector } from 'react-redux';
 
 const FilmPage = () => {
+    const dispatch = useDispatch();
     const href = window.location.href
     const id = href.split('_')[1]
     const [film, setFilm] = useState();
     const [trailer, setTrailer] = useState();
     const [key, setKey] = useState();
 
+    const comments = useSelector((state) => state.movies.comments)
+
     const [modal, setModal] = useState(false);
 
-    console.log(film);
+    const [userName, setUserName]       = useState('');
+    const [commentBody, setCommentBody] = useState('');
 
 
     useEffect(() => {
         async function get() {
             const responseTrailer = await axios.get('https://api.themoviedb.org/3/movie/' + id + '/videos?api_key=411d08d89a4569fb1b50aec07ee6fb72')
-            const response =  await axios.get('https://api.themoviedb.org/3/movie/' + id + '?api_key=411d08d89a4569fb1b50aec07ee6fb72')
+            const response = await axios.get('https://api.themoviedb.org/3/movie/' + id + '?api_key=411d08d89a4569fb1b50aec07ee6fb72')
+            const responseComments = await dispatch(fetchComments(id))
+
+            console.log(responseComments);
             setTrailer(responseTrailer.data.results);
             setFilm(response.data)
         }
+
         get()
     }, []);
 
     function handleOpen() {
         setModal(true)
     }
+
     function handleClose() {
         setModal(false)
     }
+
+
+    const sendFeedBack = useCallback((event) => {
+        console.log(userName)
+        console.log(commentBody)
+
+        set(ref(database, 'comments/' + id + '/' + Date.now()), {
+            id: Date.now(),
+            username: userName,
+            body: commentBody,
+        });
+        window.location.reload();
+    }, []);
 
     return (
         <div className={styles.Main}>
@@ -69,7 +92,7 @@ const FilmPage = () => {
                         })}
                     </Box>
                 </Modal>
-            : null
+                : null
             }
 
             {film
@@ -81,15 +104,43 @@ const FilmPage = () => {
                             <Button onClick={() => handleOpen()}>Watch Trailer</Button>
                         </div>
 
-                        <Description film={film} />
+                        <Description film={film}/>
                     </div>
-                    <p className={styles.MainDescription} >Description: <span>{film.overview}</span></p>
+                    <p className={styles.MainDescription}>Description: <span>{film.overview}</span></p>
                     <br/>
                     <h4>Leave a feedback</h4>
-                    <textarea style={{resize: 'none' }} id="w3review" name="w3review" rows="6" cols="999">
-                        At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
-                    </textarea>
-                    <Button variant="contained">Add feedback</Button>
+                    <div style={{display:'flex', flexDirection: 'column', gap: 14, margin: '14px 0'}}>
+                        <TextField
+                            id="outlined-basic"
+                            label="You're nickname"
+                            variant="outlined"
+                            value={userName}
+                            onChange={e => setUserName(e.target.value)}
+                        />
+                        <TextField
+                            id="outlined-textarea"
+                            label="Feedback"
+                            value={commentBody}
+                            onChange={e => setCommentBody(e.target.value)}
+                            placeholder="Please leave a comment here with a maximum of 250 characters"
+                            multiline
+                        />
+                    </div>
+                    <Button variant="contained" onClick={sendFeedBack}>Add feedback</Button>
+
+                    {comments
+                    ?
+                        comments.reverse().map((e, index) => {
+
+                            return (
+                                <div style={{marginTop: 14, border: '1px solid black', padding: 14, borderRadius: 4}}>
+                                    <h5>{e.username ? e.username : 'null'}</h5>
+                                    <br/>
+                                    <h4>{e.body ? e.body : 'Null'}</h4>
+                                </div>
+                            )
+                        })
+                    : null}
                 </div>
                 :
                 null
