@@ -14,18 +14,25 @@ root {
   --fonts-main: 'Gabarito', cursive;
 }
 
-h1,h2,h3,h4,h5,h6,span,p,article {
+h1,h2,h3,h4,h5,h6,a,span,p,article {
   margin: 0;
   padding: 0;
   font-family: 'Gabarito', cursive;
 }
 
+h1 { font-size: clamp(24px, 6vw, 36px); }
+h2 { font-size: clamp(20px, 5vw, 30px); }
+h3 { font-size: clamp(18px, 4.5vw, 27px); }
+h4 { font-size: clamp(16px, 4vw, 24px); }
+h5, h6, a { font-size: clamp(14px, .9vw, 21px); }
+p { font-size: clamp(14px, .8vw, 21px); }
+
+
 textarea, input {
   max-width: 100%;
-  font-size: 16px !important;
+  font-size: clamp(14px, .8vw, 21px) !important;
   font-weight: 600 !important;
   font-family: 'Gabarito', cursive !important;
-  padding: 8px;
   margin-top: 14px;
 }
 
