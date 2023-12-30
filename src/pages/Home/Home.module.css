@@ -44,9 +44,10 @@ hr {
     height: 35px;
     position: absolute;
     background-color: white;
-    opacity: 0;
+    opacity: 1;
     padding: 14px;
     border-radius: 4px;
+    box-shadow: inset 1px 1px 2px rgb(0, 0, 0, 0.5);
     top: -5px;
     left: -15px;
     display: flex;

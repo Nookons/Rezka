@@ -9,6 +9,8 @@ const FETCH_COMMENTS    = "FETCH_COMMENTS"
 
 export const movieReducer = (state = defaultStateMovies, action) => {
     switch (action.type) {
+        case "ADD_COMMENT":
+            return {...state, comments: [...state.comments, action.payload]}
         case "FETCH_MOVIES":
             return {...state, movies: [...action.payload]}
         case "FETCH_COMMENTS":

@@ -5,7 +5,8 @@ import {styled} from "@mui/material/styles";
 import {Rating} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {FILM_ROUTE} from "../../utils/consts";
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+
 
 const FilmCards = ({movies}) => {
     const navigate = useNavigate();
@@ -30,16 +31,16 @@ const FilmCards = ({movies}) => {
                 return (
                     <div onClick={() => getFilm(element.id)} className={styles.Item}>
                         <div className={styles.ItemIndex}>
-                            <h4>{index + 1}</h4>
+                            <h5>{index + 1}</h5>
                         </div>
                         <img src={"https://image.tmdb.org/t/p/w500" + element.poster_path} alt=""/>
-                        <h4>{element.title}</h4>
+                        <h5>{element.title}</h5>
                         <StyledRating
                             name="customized-color"
                             defaultValue={element.vote_average}
                             getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                             precision={1}
-                            icon={<LocalFireDepartmentIcon fontSize="inherit"/>}
+                            icon={<WhatshotIcon fontSize="inherit"/>}
                             emptyIcon={<AcUnitIcon fontSize="inherit"/>}
                             max={10}
                         />
