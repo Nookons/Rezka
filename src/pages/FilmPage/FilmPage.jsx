@@ -11,11 +11,18 @@ import {database} from "../../firebase";
 import {useSelector} from 'react-redux';
 import AddFeedback from "./FilmPageComponents/Feedback/AddFeedback";
 import FeedbackScreen from "./FilmPageComponents/Feedback/FeedbackScreen";
+import MainSkeleton from "./FilmPageComponents/Skeleton/MainSkeleton";
+import {fetchMovies} from "../../stores/async/fetchMovies";
 
 const FilmPage = () => {
     const dispatch = useDispatch();
     const href = window.location.href
     const id = href.split('_')[1]
+
+    const movies = useSelector((state) => state.movies);
+
+    const page = 1
+
 
     const [film, setFilm] = useState();
     const [trailer, setTrailer] = useState();
@@ -23,7 +30,14 @@ const FilmPage = () => {
 
     const [modal, setModal] = useState(false);
 
+    useEffect(() => {
+        async function get () {
+            const response = await dispatch(fetchMovies({page}))
+        }
+        get()
+    }, []);
 
+    console.log(film);
     useEffect(() => {
         async function get() {
             const responseTrailer = await axios.get('https://api.themoviedb.org/3/movie/' + id + '/videos?api_key=411d08d89a4569fb1b50aec07ee6fb72')
@@ -89,21 +103,40 @@ const FilmPage = () => {
                         <div className={styles.Banner}>
                             <img src={"https://image.tmdb.org/t/p/w500" + film.poster_path} alt=""/>
                             <Button className={styles.Btn} onClick={() => handleOpen()}>Watch Trailer</Button>
+                            <Button className={styles.Btn} href={film.homepage}>Watch</Button>
                         </div>
 
                         <Description film={film}/>
                     </div>
                     <p className={styles.MainDescription}>Description: <span>{film.overview}</span></p>
                     <br/>
+                    <h5>Popular movies...</h5>
+                    <br/>
+                    <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'flex-start'}}>
+                        {movies.movies.map((e, index) => {
 
+                            if (e.id.toString() === id) {
+                                index -= 1
+                            }
+
+                            if (index < 6 && e.id.toString() !== id) {
+                                return (
+                                    <div>
+                                        <img style={{maxWidth: 105}}
+                                             src={"https://image.tmdb.org/t/p/w500" + e.poster_path} alt=""/>
+                                    </div>
+                                )
+                            }
+                        })}
+                    </div>
+                    <br/>
                     <div className={styles.FeedBackPlace}>
-                        <FeedbackScreen />
+                        <FeedbackScreen/>
                         <AddFeedback id={id}/>
                     </div>
-
                 </div>
                 :
-                null
+                <MainSkeleton/>
             }
         </div>
     );

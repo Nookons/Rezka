@@ -28,12 +28,18 @@ const FilmCards = ({movies}) => {
         <div className={styles.Wrapper}>
             {movies.map((element, index) => {
 
+                let imgLoad = false;
+
+                const imgLoaded = () => {
+                    imgLoad = true
+                }
+
                 return (
                     <div onClick={() => getFilm(element.id)} className={styles.Item}>
                         <div className={styles.ItemIndex}>
                             <h5>{index + 1}</h5>
                         </div>
-                        <img src={"https://image.tmdb.org/t/p/w500" + element.poster_path} alt=""/>
+                        <img onLoad={imgLoaded} src={"https://image.tmdb.org/t/p/w500" + element.poster_path} alt=""/>
                         <h5>{element.title}</h5>
                         <StyledRating
                             name="customized-color"

@@ -31,7 +31,7 @@ const AddFeedback = ({id}) => {
 
         setLoader(true)
 
-        if (userName.length < 4 && commentBody.length < 4) {
+        if (userName.length < 4 || commentBody.length < 4) {
             alert('Pls dont send empty comment')
             setLoader(false)
             return
@@ -84,6 +84,7 @@ const AddFeedback = ({id}) => {
                 margin: '14px 0'
             }}>
                 <TextField
+                    type={'email'}
                     id="outlined-basic"
                     label="You're nickname"
                     variant="outlined"
@@ -95,7 +96,7 @@ const AddFeedback = ({id}) => {
                     label="Feedback"
                     value={commentBody}
                     onChange={e => setCommentBody(e.target.value)}
-                    placeholder="Please leave a comment here with a maximum of 250 characters"
+                    placeholder="Please leave a comment here with a maximum of 550 characters"
                     multiline
                 />
             </div>

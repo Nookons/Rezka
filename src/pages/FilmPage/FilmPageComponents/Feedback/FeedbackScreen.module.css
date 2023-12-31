@@ -1,0 +1,13 @@
+
+
+.Comment {
+}
+
+.BigComment {
+    overflow: hidden;
+    height: 250px;
+}
+
+.BigCommentActive {
+    background-color: #007bb6;
+}

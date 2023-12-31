@@ -42,6 +42,9 @@ const Home = () => {
     }, [page]);
 
     const changePage = (event, value) => {
+
+        dispatch({ type: 'FETCH_MOVIES', payload: [] });
+
         window.scrollTo({
             top: 0,
             //behavior: "smooth" // добавьте это свойство для плавного скролла
@@ -52,19 +55,19 @@ const Home = () => {
 
     return (
         <div className={styles.Main}>
-            {movies
+            {movies.length
                 ?
                     <FilmCards movies={movies} />
                 :
                 <div className={styles.Wrapper}>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
-                    <Skeleton variant="rounded" width={360} height={596}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
+                    <Skeleton variant="rounded" width={350} height={580}/>
                 </div>
             }
             {movies ? <Pagination style={{margin: 28}} count={totalItems / 40} page={page} onChange={changePage}
