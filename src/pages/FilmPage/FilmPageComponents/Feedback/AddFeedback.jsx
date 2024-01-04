@@ -18,6 +18,7 @@ const AddFeedback = ({id}) => {
 
     const sendFeedback = async () => {
         const filmId = id;
+        const commentId = Date.now();
 
         const year = dayjs().get('year')
         const month = dayjs().get('month') + 1
@@ -44,17 +45,19 @@ const AddFeedback = ({id}) => {
             return false;
         }
 
+
+        const response      = await sendToDataBase({userName, commentBody, filmId, TimeStamp, commentId});
+
+
+
         const comment = {
-            id: Date.now(),
+            id: commentId,
             username: userName,
             timestamp: TimeStamp,
             body: commentBody,
+            likes: 0,
+            userLike: false
         };
-
-
-        const response = await sendToDataBase({userName, commentBody, filmId, TimeStamp});
-
-        console.log(response);
 
         if (response) {
             setTimeout(() => {

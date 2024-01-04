@@ -131,7 +131,7 @@ const FilmPage = () => {
                     </div>
                     <br/>
                     <div className={styles.FeedBackPlace}>
-                        <FeedbackScreen/>
+                        <FeedbackScreen id={id}/>
                         <AddFeedback id={id}/>
                     </div>
                 </div>
