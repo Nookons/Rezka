@@ -20,7 +20,7 @@ export const movieReducer = (state = defaultStateMovies, action) => {
             return {
                 ...state,
                 comments: state.comments.map(comment =>
-                    comment.id === action.payload.updtID ? { ...comment, likes: action.payload.updtLikes, userLike: action.payload.updtUserLike } : comment
+                    comment.id === action.payload.updtID ? { ...comment, likes: action.payload.updtLikes, userLike: [...comment.userLike, action.payload.updtUserLike] } : comment
                 )
             };
         case "FETCH_MOVIES":

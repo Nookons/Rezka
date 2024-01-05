@@ -1,14 +1,14 @@
 import React, {useCallback, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import styles from "../../Film.module.css";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {sendToDataBase} from "../../../../utils/database";
 import Loader from "../../../../components/Loader/Loader";
 import dayjs from "dayjs";
 
 const AddFeedback = ({id}) => {
     const dispatch = useDispatch();
-
+    const user = useSelector((state) => state.user.user);
 
     const [userName, setUserName] = useState('');
     const [commentBody, setCommentBody] = useState('');
@@ -17,62 +17,56 @@ const AddFeedback = ({id}) => {
 
 
     const sendFeedback = async () => {
-        const filmId = id;
-        const commentId = Date.now();
+        try {
+            const filmId = id;
+            const commentId = Date.now();
+            const TimeStamp = dayjs().format('DD-MM-YYYY | HH:mm');
 
-        const year = dayjs().get('year')
-        const month = dayjs().get('month') + 1
-        const date = dayjs().get('date')
+            setLoader(true);
 
-        const hour = dayjs().get('hour')
-        const minute = dayjs().get('minute')
+            const isCommentInvalid = (user.uid && commentBody.length < 4) || (!user.uid && (userName.length < 4 || commentBody.length < 4));
 
+            if (isCommentInvalid) {
+                alert('Please do not send an empty comment');
+                setLoader(false);
+                return;
+            }
 
-        const TimeStamp = date + '-' + month + '-' + year + ' | ' + hour + ':' + minute
+            const response = await sendToDataBase({
+                userName,
+                commentBody,
+                filmId,
+                TimeStamp,
+                commentId,
+                user
+            });
 
-        setLoader(true)
-
-        if (userName.length < 4 || commentBody.length < 4) {
-            alert('Pls dont send empty comment')
-            setLoader(false)
-            return
+            if (response) {
+                setTimeout(() => {
+                    setUserName('');
+                    setCommentBody('');
+                    setLoader(false);
+                    const comment = {
+                        id: commentId,
+                        username: user.uid ? user.email : userName,
+                        timestamp: TimeStamp,
+                        body: commentBody,
+                        likes: 0,
+                        userLike: [],
+                    };
+                    dispatch({ type: 'ADD_COMMENT', payload: comment });
+                }, 500);
+            } else {
+                setLoader(false);
+                alert('Comment not added');
+                console.error('Failed to add comment to the database.');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+            setLoader(false);
         }
-
-        if (!navigator.onLine) {
-            console.error('No internet connection');
-            setLoader(false)
-            alert('Comment not added')
-            return false;
-        }
-
-
-        const response      = await sendToDataBase({userName, commentBody, filmId, TimeStamp, commentId});
-
-
-
-        const comment = {
-            id: commentId,
-            username: userName,
-            timestamp: TimeStamp,
-            body: commentBody,
-            likes: 0,
-            userLike: false
-        };
-
-        if (response) {
-            setTimeout(() => {
-                setUserName('')
-                setCommentBody('')
-                setLoader(false)
-                dispatch({type: 'ADD_COMMENT', payload: comment});
-            }, 500)
-        } else {
-            setLoader(false)
-            alert('Comment not added')
-            console.error('Failed to add comment to the database.');
-        }
-
     };
+
 
 
     return (
@@ -86,14 +80,19 @@ const AddFeedback = ({id}) => {
                 gap: 14,
                 margin: '14px 0'
             }}>
-                <TextField
-                    type={'email'}
-                    id="outlined-basic"
-                    label="You're nickname"
-                    variant="outlined"
-                    value={userName}
-                    onChange={e => setUserName(e.target.value)}
-                />
+                {user.uid
+                    ?
+                    <div>Name of: {user.email}</div>
+                    :
+                    <TextField
+                        type={'email'}
+                        id="outlined-basic"
+                        label="You're nickname"
+                        variant="outlined"
+                        value={userName}
+                        onChange={e => setUserName(e.target.value)}
+                    />
+                }
                 <TextField
                     id="outlined-textarea"
                     label="Feedback"
