@@ -37,14 +37,12 @@ const FilmPage = () => {
         get()
     }, []);
 
-    console.log(film);
     useEffect(() => {
         async function get() {
             const responseTrailer = await axios.get('https://api.themoviedb.org/3/movie/' + id + '/videos?api_key=411d08d89a4569fb1b50aec07ee6fb72')
             const response = await axios.get('https://api.themoviedb.org/3/movie/' + id + '?api_key=411d08d89a4569fb1b50aec07ee6fb72')
             const responseComments = await dispatch(fetchComments(id))
 
-            console.log(responseComments);
             setTrailer(responseTrailer.data.results);
             setFilm(response.data)
         }
