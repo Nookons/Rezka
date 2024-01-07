@@ -55,8 +55,8 @@ body {
 }
 
 ::selection {
-  background-color: rgba(52, 255, 0, 0.29);
-  color: #272829;
+  background-color: rgba(12, 12, 12, 1);
+  color: white;
 }
 
 @media (prefers-color-scheme: dark) {
