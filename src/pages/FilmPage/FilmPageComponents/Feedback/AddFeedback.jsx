@@ -32,28 +32,23 @@ const AddFeedback = ({id}) => {
                 return;
             }
 
-            const response = await sendToDataBase({
-                userName,
-                commentBody,
-                filmId,
-                TimeStamp,
-                commentId,
-                user
-            });
+            const comment = {
+                id: commentId,
+                username: user.uid ? user.email : userName,
+                timestamp: TimeStamp,
+                body: commentBody,
+                likes: 0,
+                userLike: [],
+                child: [],
+            };
+
+            const response = await sendToDataBase({comment, filmId});
 
             if (response) {
                 setTimeout(() => {
                     setUserName('');
                     setCommentBody('');
                     setLoader(false);
-                    const comment = {
-                        id: commentId,
-                        username: user.uid ? user.email : userName,
-                        timestamp: TimeStamp,
-                        body: commentBody,
-                        likes: 0,
-                        userLike: [],
-                    };
                     dispatch({ type: 'ADD_COMMENT', payload: comment });
                 }, 500);
             } else {
@@ -72,7 +67,7 @@ const AddFeedback = ({id}) => {
     return (
         <div>
             <Loader value={loader} setValue={setLoader}/>
-            <h4>Leave a feedback</h4>
+            <h4> 🤬 Leave a feedback</h4>
             <hr/>
             <div style={{
                 display: 'flex',

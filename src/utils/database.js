@@ -4,16 +4,11 @@ import {child, push, update} from "firebase/database";
 import dayjs from "dayjs";
 import {getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
-export const sendToDataBase = async ({userName, commentBody, filmId, TimeStamp, commentId, user}) => {
+export const sendToDataBase = async ({comment, filmId}) => {
     try {
-        await set(ref(database, `comments/${filmId}/${commentId}`), {
-            id: commentId,
-            timestamp: TimeStamp,
-            username: user.uid ? user.email : userName,
-            body: commentBody,
-            likes: 0,
+        await set(ref(database, `comments/${filmId}/${comment.id}`), {
+            ...comment
         });
-
         return true;
     } catch (error) {
         console.error('Error adding comment to the database:', error);
@@ -21,18 +16,40 @@ export const sendToDataBase = async ({userName, commentBody, filmId, TimeStamp, 
     }
 }
 
-export async function updateLikesAtComments({likes, element, id, commentId, uid}) {
-
-    const newLikesCount = likes - 1;
-    const newUserLikes = element.userLike.filter(item => item !== uid);
+export async function Unlikes ({likes, element, id, commentId, uid}) {
+    let tempArray = element.userLike.filter(e => e !== uid)
+    const newLikesCountMinus = likes - 1;
 
     const updates = {
-        [`/comments/${id}/${commentId}/likes`]: newLikesCount,
-        [`/comments/${id}/${commentId}/userLike`]: newUserLikes
+        [`/comments/${id}/${commentId}/likes`]: newLikesCountMinus,
+        [`/comments/${id}/${commentId}/userLike`]: [...tempArray]
+    };
+    await update(ref(database), updates);
+
+    return true
+}
+
+export async function updateLikesAtComments({likes, element, id, commentId, uid}) {
+    const newLikesCountPlus = likes + 1;
+    const newUserLikes = uid;
+
+    const updates = {
+        [`/comments/${id}/${commentId}/likes`]: newLikesCountPlus,
+        [`/comments/${id}/${commentId}/userLike`]: element.userLike ? [...element.userLike, newUserLikes] : [newUserLikes]
     };
 
     await update(ref(database), updates);
-    return true
+    return true;
+}
+
+export async function addCommentChild({id, comment, temporaryComment, user, answerBody}) {
+
+    const updates = {
+        [`/comments/${id}/${comment.id}/child`]: comment.child ? [...comment.child, temporaryComment] : [temporaryComment]
+    };
+
+    await update(ref(database), updates);
+    return true;
 }
 
 export async function mySignIn({nickName, password}) {

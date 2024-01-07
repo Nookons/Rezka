@@ -25,8 +25,9 @@ const Description = ({film}) => {
         <div className={styles.Main}>
             <div className={styles.DescriptionWrapper}>
                 <h1>{film.title}</h1>
-                <h5>{film.tagline}</h5>
+                <h5 className={styles.FilmDescription} >{film.tagline}</h5>
                 <StyledRating
+                    className={styles.FilmDescription}
                     name="customized-color"
                     defaultValue={film.vote_average}
                     getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}

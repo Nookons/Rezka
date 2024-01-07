@@ -7,6 +7,7 @@ export const defaultStateMovies = {
 const FETCH_MOVIES      = "FETCH_MOVIES"
 const FETCH_COMMENTS    = "FETCH_COMMENTS"
 const ADD_LIKE          = "ADD_LIKE"
+const ADD_CHILD         = "ADD_CHILD"
 
 export const movieReducer = (state = defaultStateMovies, action) => {
     switch (action.type) {
@@ -20,7 +21,15 @@ export const movieReducer = (state = defaultStateMovies, action) => {
             return {
                 ...state,
                 comments: state.comments.map(comment =>
-                    comment.id === action.payload.updtID ? { ...comment, likes: action.payload.updtLikes, userLike: [...comment.userLike, action.payload.updtUserLike] } : comment
+                    comment.id === action.payload.id ? { ...comment, likes: action.payload.likes, userLike: [action.payload.userlike] } : comment
+                )
+            };
+        case "ADD_CHILD":
+            // Предположим, что action.payload содержит id комментария и обновленные данные по лайкам.
+            return {
+                ...state,
+                comments: state.comments.map(comment =>
+                    comment.id === action.payload.fatherId ? { ...comment, child: comment.child ? [...comment.child, action.payload] : [action.payload] } : comment
                 )
             };
         case "FETCH_MOVIES":
@@ -53,3 +62,4 @@ export const movieReducer = (state = defaultStateMovies, action) => {
 export const addMoviesAction    = (payload) => ({type: FETCH_MOVIES, payload})
 export const addCommentsAction  = (payload) => ({type: FETCH_COMMENTS, payload})
 export const addLikeAction      = (payload) => ({type: ADD_LIKE, payload})
+export const addChildAction     = (payload) => ({type: ADD_CHILD, payload})

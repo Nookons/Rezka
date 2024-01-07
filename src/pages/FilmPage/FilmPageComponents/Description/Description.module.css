@@ -16,6 +16,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 6px;
+    margin-left: 4px;
 }
 .FilmDescription > span{
     font-weight: 600;

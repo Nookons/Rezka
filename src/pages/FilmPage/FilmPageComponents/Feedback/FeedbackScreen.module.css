@@ -1,13 +1,68 @@
 
 
 .Comment {
+    //box-shadow: 0 0 15px rgba(0,0,0, 0.25);
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 14px;
+    margin-top: 14px;
 }
 
-.BigComment {
-    overflow: hidden;
-    height: 250px;
+.MainLabel {
+    display: flex;
+    gap: 4px;
+}
+.MainLabel > img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.Comment {
+    //box-shadow: 0 0 15px rgba(0,0,0, 0.25);
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding: 14px;
+    margin-top: 14px;
 }
 
-.BigCommentActive {
-    background-color: #007bb6;
+.Comment > div > div > button{
+    font-size: 14px !important;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+
+.ChildCommentContainer {
+    margin-top: 24px;
+}
+.ChildComment {
+    //box-shadow: 0 0 15px rgba(0,0,0, 0.25);
+    background-color: #dedede;
+    border-radius: 4px;
+    padding: 14px;
+    margin-top: 4px;
+    margin-left: 14px;
+}
+
+.Pagination {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+}
+.PaginationButton {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    margin-right: 4px;
+    background-color: #939393;
+}
+.PaginationButton > a{
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
 }

@@ -86,7 +86,7 @@ const FilmPage = () => {
                                         ></iframe>
                                     )
                                 default:
-                                    break
+                                    break;
                             }
                         })}
                     </Box>
