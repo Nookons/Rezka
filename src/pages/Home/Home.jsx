@@ -38,6 +38,10 @@ const Home = () => {
         const storedData = localStorage.getItem('pageInfo');
         const localPage = Number(storedData);
 
+        if (storedData === null) {
+            localStorage.setItem('pageInfo', 1);
+        }
+
         if (localPage !== page) {
             setPage(localPage);
         }
