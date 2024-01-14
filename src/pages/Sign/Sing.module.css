@@ -1,5 +1,5 @@
 .Main {
-    min-height: calc(100dvh - 86px - 99px);
+    min-height: calc(100dvh - 86px - 86px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,13 +11,13 @@
     min-width: 650px;
     padding: 50px 140px;
     gap: 8px;
-    background-color: #eeeeee;
+    //background-color: #eeeeee;
     border-radius: 14px;
 }
 
 @media screen and (max-width: 1000px){
     .Main {
-        min-height: calc(100dvh - 86px - 153px);
+        min-height: calc(100dvh - 86px - 140px);
     }
 
     .Wrapper {

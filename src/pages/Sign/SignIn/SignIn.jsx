@@ -48,7 +48,7 @@ const SignIn = () => {
         <div className={MainStyles.Main}>
             <Loader value={loader} setValue={setLoader}/>
             <div className={MainStyles.Wrapper}>
-                <div style={{display: "flex", alignItems: 'center', justifyContent: 'center', gap: 14}}>
+                <div style={{display: "flex", alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 34}}>
                     <img style={{maxWidth: 32}} src={logo} alt=""/>
                     <h4>Welcome back !!!</h4>
                 </div>
