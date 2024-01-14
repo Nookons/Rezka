@@ -10,7 +10,7 @@
     flex-direction: column;
     min-width: 650px;
     padding: 50px 140px;
-    gap: 14px;
+    gap: 8px;
     background-color: #eeeeee;
     border-radius: 14px;
 }

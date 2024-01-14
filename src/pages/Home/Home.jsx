@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button, Modal, Pagination, Rating, Skeleton, Typography} from "@mui/material";
 import styles from './Home.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMovies} from "../../stores/async/fetchMovies";
 import FilmCards from "./FilmCards";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
 const Home = () => {
@@ -16,14 +17,14 @@ const Home = () => {
 
     const [scrollY, setScrollY] = useState(0);
 
-    console.log(movies);
+    const rootClasses = [styles.GoOnTop]
 
     const handleScroll = () => {
         setScrollY(window.scrollY);
     };
 
     if (scrollY > 250) {
-        console.log('go on top')
+        rootClasses.push(styles.GoOnTopActive)
     }
 
     useEffect(() => {
@@ -34,40 +35,59 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-       async function get () {
-           const response = await dispatch(fetchMovies({page}))
-           setTotalItems(response.total_results)
-       }
-        get()
-    }, [page]);
+        const storedData = localStorage.getItem('pageInfo');
+        const localPage = Number(storedData);
+
+        if (localPage !== page) {
+            setPage(localPage);
+        }
+
+        dispatch({ type: 'FETCH_MOVIES', payload: [] });
+
+        if (localPage === page) {
+            async function fetchData() {
+                const response = await dispatch(fetchMovies({ page }));
+                setTotalItems(response.total_results);
+            }
+            fetchData();
+        }
+    }, [page, dispatch, setTotalItems, setPage]);
 
     const changePage = (event, value) => {
+        // Store the JSON string in local storage
+        localStorage.setItem('pageInfo', value);
 
         dispatch({ type: 'FETCH_MOVIES', payload: [] });
 
         window.scrollTo({
             top: 0,
-            //behavior: "smooth" // добавьте это свойство для плавного скролла
+            // behavior: "smooth" // добавьте это свойство для плавного скролла
         });
-        setData([])
-        setPage(value)
-    }
+
+        setData([]);
+        setPage(value);
+    };
+
+    const goOnTop = useCallback((event) => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth" // добавьте это свойство для плавного скролла
+        });
+    }, []);
 
     return (
         <div className={styles.Main}>
+            <div className={rootClasses.join(' ')} onClick={goOnTop}>
+                <KeyboardArrowUpIcon />
+            </div>
             {movies.length
                 ?
                     <FilmCards movies={movies} />
                 :
                 <div className={styles.Wrapper}>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
-                    <Skeleton variant="rounded" width={350} height={580}/>
+                    {Array.from({ length: 20 }).map((_, index) => (
+                        <Skeleton key={index} variant="rounded" width={350} height={580} />
+                    ))}
                 </div>
             }
             {movies ? <Pagination style={{margin: 28}} count={totalItems / 40} page={page} onChange={changePage}

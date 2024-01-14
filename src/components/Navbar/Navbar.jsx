@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from './Navbar.module.css'
 import {Link, useNavigate} from "react-router-dom";
-import logo from '../../assets/logo.svg'
+import logo from '../../assets/logo.png'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchUser} from "../../stores/async/fetchUser";
 import LoginIcon from '@mui/icons-material/Login';
 import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
-import {SIGN_IN_ROUTE} from "../../utils/consts";
+import {HOME_ROUTE, SIGN_IN_ROUTE} from "../../utils/consts";
 import LogoutIcon from '@mui/icons-material/Logout';
 import {mySignOut} from "../../utils/database";
 import Loader from "../Loader/Loader";
@@ -55,11 +55,17 @@ const Navbar = () => {
         }
     };
 
+    const goHome = useCallback((event) => {
+        localStorage.setItem('pageInfo', 1);
+        navigate(HOME_ROUTE)
+    }, []);
+
     return (
         <div className={styles.Main}>
             <Loader value={loader} setValue={setLoader}/>
-            <div className={styles.LogoPlace}>
+            <div className={styles.LogoPlace} onClick={goHome}>
                 <img src={logo} alt=""/>
+                <h4>Nmovies</h4>
             </div>
             <div className={burger ? styles.BurgerActive : styles.Burger} onClick={onBurgerClick}>
                 <a></a>

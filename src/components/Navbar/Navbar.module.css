@@ -33,11 +33,19 @@
 
 
 .LogoPlace {
-    max-width: 50px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: .4vw;
+}
+.LogoPlace:hover{
+    background-color: #eeeeee;
 }
 
 .LogoPlace > img{
-    max-width: 100%;
+    max-width: 35px;
 }
 
 @media screen and (max-width: 750px) {

@@ -8,17 +8,12 @@ import {userSignInAction} from "../../../stores/userReducer";
 import {useNavigate} from "react-router-dom";
 import {HOME_ROUTE} from "../../../utils/consts";
 import Loader from "../../../components/Loader/Loader";
+import logo from '../../../assets/logo.png'
 
 const SignIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector( (state) => state.user.user)
-
-    useEffect(() => {
-        if (user.uid) {
-            navigate(HOME_ROUTE)
-        }
-    }, []);
 
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
@@ -42,10 +37,21 @@ const SignIn = () => {
         }
     };
 
+    useEffect(() => {
+        // If user is authenticated, redirect to home
+        if (user && user.uid) {
+            navigate(HOME_ROUTE);
+        }
+    }, [user]);
+
     return (
         <div className={MainStyles.Main}>
             <Loader value={loader} setValue={setLoader}/>
             <div className={MainStyles.Wrapper}>
+                <div style={{display: "flex", alignItems: 'center', justifyContent: 'center', gap: 14}}>
+                    <img style={{maxWidth: 32}} src={logo} alt=""/>
+                    <h4>Welcome back !!!</h4>
+                </div>
                 <article>Login:</article>
                 <TextField
                     required
@@ -64,6 +70,7 @@ const SignIn = () => {
                     autoComplete="current-password"
                     placeholder="Please leave a password here"
                 />
+                <article style={{marginTop: 34}}>Don't have account? <span style={{color: "#7272fd", textDecoration: 'underline dotted #7272fd', cursor: 'pointer'}}>Sign up</span></article>
                 <Button className={styles.Btn} onClick={signIn}>Sign In</Button>
             </div>
         </div>
