@@ -57,6 +57,28 @@ hr {
     transition: .3s all ease-in-out;
 }
 
+.GoOnTop {
+    position: fixed;
+    border: 2px solid black;
+    border-radius: 1vw;
+    padding: 6px 6px 2px;
+    margin: 0;
+    bottom: 24px;
+    right: 14px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    background-color: white;
+    z-index: 3;
+}
+.GoOnTopActive {
+    opacity: 1;
+    pointer-events: auto;
+}
+.GoOnTop > svg{
+    margin: 0;
+}
+
 .FilmDescription {
     display: flex;
     flex-wrap: wrap;

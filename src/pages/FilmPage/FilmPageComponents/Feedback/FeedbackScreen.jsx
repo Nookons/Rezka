@@ -56,6 +56,10 @@ const FeedbackScreen = ({ id }) => {
     };
 
     const handleUserLiked = async ({ likes, element, commentId }) => {
+        if (!user.uid) {
+            alert("You need sign in for this...")
+            return
+        }
         try {
             setLoader(true);
             newLike = true;
